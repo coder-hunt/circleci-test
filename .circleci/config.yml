@@ -11,14 +11,14 @@ version: 2
 jobs:
   one:
    docker:
-    - image: circleci/node:1.0.0
+    - image: circleci/node:4.8.2
    steps:
     - checkout
     - run: echo "Hey, Hello one!"
     - run: sleep 15
   two:
    docker:
-    - image: circleci/node:1.0.0
+    - image: circleci/node:4.8.2
    steps:
     - checkout
     - run: echo "hey, hello two"
