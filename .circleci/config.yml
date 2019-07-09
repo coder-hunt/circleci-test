@@ -15,18 +15,31 @@ jobs:
    steps:
     - checkout
     - run: echo "Hey, Hello one!"
-    - run: sleep 15
+    - run: mkdir -p my_workspace
+    - run: echo "Trying out workspace"> my_workspace/echo_output
+    - persist_to_workspace:
+        root: my_workspace
+        paths: 
+          - echo=output
   two:
    docker:
     - image: circleci/node:4.8.2
    steps:
     - checkout
     - run: echo "hey, hello two"
-    - run: sleep 20
-
+    - attach_workspace:
+        at: my_workspace
+    - run: |
+         if [[ $(cat my_workspace/echo-output) == "Trying out workspace"]]; then
+           echo "it worked!"
+         else 
+            echo "Nope!" exit 1;
+         fi
 workflows: 
  version: 2
  one_and_two:
   jobs:
     - one
-    - two
+    - two:
+       requires:
+         - one
