@@ -1,8 +1,32 @@
+# version: 2
+# jobs:
+#   build:
+#     docker:
+#       - image: circleci/node:4.8.2
+#     steps:
+#       - checkout
+#       - run: echo "A first hello"
+
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/node:4.8.2
-    steps:
-      - checkout
-      - run: echo "A first hello"
+  one:
+   docker:
+    - image: circleci/node:1.0.0
+   steps:
+    - checkout
+    - run: echo "Hey, Hello one!"
+    - run: sleep 15
+  two:
+   docker:
+    - image: circleci/node:1.0.0
+   steps:
+    - checkout
+    - run: echo "hey, hello two"
+    - run: sleep 20
+
+workflows: 
+ version: 2
+ one_and_two:
+  jobs:
+    - one
+    - two
